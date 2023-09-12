@@ -23,7 +23,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: lll9p/warp
+          images: lll9p/xray-warp
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -31,5 +31,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: lll9p/warp:latest
+          tags: lll9p/xray-warp:latest
           labels: ${{ steps.meta.outputs.labels }}
