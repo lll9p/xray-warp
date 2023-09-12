@@ -15,11 +15,10 @@ RUN set -eux; \
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ bookworm main" >> /etc/apt/sources.list.d/cloudflare-client.list ; \
     apt-get update && apt-get install -y cloudflare-warp ; \
     apt-get autoclean; rm -rf /var/lib/apt/lists/* ; \
-    curl -O https://github.com/XTLS/Xray-core/releases/download/v${XRAY_VERSION}/Xray-linux-64.zip ; \
+    curl -L https://github.com/XTLS/Xray-core/releases/download/v${XRAY_VERSION}/Xray-linux-64.zip > Xray-linux-64.zip; \
     mkdir /root/xray; \
     mv Xray-linux-64.zip /root/xray ; \
-    pushd /root/xray ; \
-    unzip Xray-linux-64.zip ; \
+    cd /root/xray && unzip Xray-linux-64.zip ; \
     mkdir -p /usr/local/share/xray ; \
     mkdir -p /etc/xray ; \
     mv /root/xray/xray /usr/local/bin/xray ; \
