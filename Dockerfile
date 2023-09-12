@@ -18,7 +18,7 @@ RUN set -eux; \
     curl -O https://github.com/XTLS/Xray-core/releases/download/v${XRAY_VERSION}/Xray-linux-64.zip ; \
     mkdir /root/xray; \
     mv Xray-linux-64.zip /root/xray ; \
-    cd /root/xray ; \
+    pushd /root/xray ; \
     unzip Xray-linux-64.zip ; \
     mkdir -p /usr/local/share/xray ; \
     mkdir -p /etc/xray ; \
