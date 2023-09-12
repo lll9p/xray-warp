@@ -16,7 +16,7 @@ RUN set -eux; \
     apt-get update && apt-get install -y cloudflare-warp ; \
     apt-get autoclean; rm -rf /var/lib/apt/lists/* ; \
     curl -O https://github.com/XTLS/Xray-core/releases/download/v${XRAY_VERSION}/Xray-linux-64.zip ; \
-    mkdpr /root/xray; \
+    mkdir /root/xray; \
     mv Xray-linux-64.zip /root/xray ; \
     cd /root/xray ; \
     unzip Xray-linux-64.zip ; \
