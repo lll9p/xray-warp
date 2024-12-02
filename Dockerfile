@@ -4,7 +4,7 @@ LABEL maintainer="lll9p <lll9p.china@gmail.com>"
 
 ENV TZ Asia/Shanghai
 ARG DEBIAN_FRONTEND=noninteractive
-ARG XRAY_VERSION=24.11.5
+ARG XRAY_VERSION=24.11.30
 
 WORKDIR /root
 
