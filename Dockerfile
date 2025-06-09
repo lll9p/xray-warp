@@ -2,23 +2,20 @@ FROM debian:bookworm-slim
 
 LABEL maintainer="lll9p <lll9p.china@gmail.com>"
 
-ENV TZ Asia/Shanghai
 ARG DEBIAN_FRONTEND=noninteractive
-ARG XRAY_VERSION=25.5.16
+ARG ARCH=$(uname -m | sed 's/x86_64/64/; s/aarch64/arm64-v8a/')
 
 WORKDIR /root
 
 RUN set -eux; \
     apt-get update ; \
     apt-get install -y tzdata gnupg curl unzip ; \
-    curl https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg ; \
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ bookworm main" >> /etc/apt/sources.list.d/cloudflare-client.list ; \
     apt-get update && apt-get install -y cloudflare-warp ; \
     apt-get autoclean; rm -rf /var/lib/apt/lists/* ; \
-    curl -L https://github.com/XTLS/Xray-core/releases/download/v${XRAY_VERSION}/Xray-linux-64.zip > Xray-linux-64.zip; \
+    curl -L https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip > xray.zip; \
     mkdir /root/xray; \
-    mv Xray-linux-64.zip /root/xray ; \
-    cd /root/xray && unzip Xray-linux-64.zip ; \
+    mv xray.zip /root/xray ; \
+    cd /root/xray && unzip xray.zip ; \
     mkdir -p /usr/local/share/xray ; \
     mkdir -p /etc/xray ; \
     mv /root/xray/xray /usr/local/bin/xray ; \
@@ -27,5 +24,11 @@ RUN set -eux; \
     chmod +x /usr/local/bin/xray ; \
     rm -rf /root/xray
 
-VOLUME /etc/xray
-CMD [ "/usr/bin/xray", "-config", "/etc/xray/config.json" ]
+ARG TZ=Asia/Shanghai
+ENV TZ=$TZ
+
+VOLUME /usr/local/etc/xray
+VOLUME /var/log/xray
+
+ENTRYPOINT [ "/usr/local/bin/xray" ]
+CMD [ "-confdir", "/usr/local/etc/xray/" ]
