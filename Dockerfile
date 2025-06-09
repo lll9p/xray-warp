@@ -3,7 +3,7 @@ FROM debian:bookworm-slim
 LABEL maintainer="lll9p <lll9p.china@gmail.com>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG ARCH=$(uname -m | sed 's/x86_64/64/; s/aarch64/arm64-v8a/')
+ARG ARCH="$(uname -m | sed 's/x86_64/64/; s/aarch64/arm64-v8a/')"
 
 WORKDIR /root
 
