@@ -10,10 +10,11 @@ WORKDIR /root
 RUN set -eux; \
     apt-get update ; \
     apt-get install -y tzdata gnupg curl unzip ; \
+    curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg ; \
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list ; \
     apt-get update && apt-get install -y cloudflare-warp ; \
     apt-get autoclean; rm -rf /var/lib/apt/lists/* ; \
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip"; \
-    curl -L "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip" > xray.zip; \
+    curl -L "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip" > xray.zip ; \
     mkdir /root/xray; \
     mv xray.zip /root/xray ; \
     cd /root/xray && unzip xray.zip ; \
