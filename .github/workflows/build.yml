@@ -11,13 +11,6 @@ jobs:
   docker:
     name: Build and Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - service_name: "linux-amd64"
-            platform: linux/amd64
-          - service_name: "linux-arm64"
-            platform: linux/arm64
     steps:
       - name: Check out the repo
         uses: actions/checkout@main
@@ -31,7 +24,9 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
         with:
-          platforms: ${{ matrix.platform }}
+          platforms: |
+            linux/amd64 
+            linux/arm64
 
       - name: Set up Docker Buildx
         id: buildx
@@ -49,7 +44,9 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Dockerfile
-          platforms: ${{ matrix.platform }}
+          platforms: |
+            linux/amd64 
+            linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
