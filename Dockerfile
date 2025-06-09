@@ -12,7 +12,8 @@ RUN set -eux; \
     apt-get install -y tzdata gnupg curl unzip ; \
     apt-get update && apt-get install -y cloudflare-warp ; \
     apt-get autoclean; rm -rf /var/lib/apt/lists/* ; \
-    curl -L https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip > xray.zip; \
+    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip"; \
+    curl -L "https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-${ARCH}.zip" > xray.zip; \
     mkdir /root/xray; \
     mv xray.zip /root/xray ; \
     cd /root/xray && unzip xray.zip ; \
