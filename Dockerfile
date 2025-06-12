@@ -31,5 +31,4 @@ ENV TZ=$TZ
 VOLUME /usr/local/etc/xray
 VOLUME /var/log/xray
 
-ENTRYPOINT [ "/usr/local/bin/xray" ]
-CMD [ "-confdir", "/usr/local/etc/xray/" ]
+CMD [ "/usr/local/bin/xray", "-confdir", "/usr/local/etc/xray/" ]
